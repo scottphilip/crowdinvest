@@ -11,10 +11,10 @@ namespace CrowdInvestCore.Models
 
 		public Guid InvestmentFundId { get; set; }
 
-		public Guid InvestorId {get; set; }
+		public Guid InvestorId { get; set; }
 
 		public decimal Value { get; set; }
 
-		public DateTime ConfirmedOnUtc {get; set; }
+		public DateTime ConfirmedOnUtc { get; set; }
 	}
 }

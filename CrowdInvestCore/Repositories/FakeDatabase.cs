@@ -8,8 +8,8 @@ namespace CrowdInvestCore.Repositories
 {
 	public static class FakeDatabase
 	{
-		public static ConcurrentBag<InvestmentFund> InvestmentFunds {get; set; }
-		public static ConcurrentBag<InvestmentFundContribution> InvestmentFundContributions {get; set; }
+		public static ConcurrentBag<InvestmentFund> InvestmentFunds { get; set; }
+		public static ConcurrentBag<InvestmentFundContribution> InvestmentFundContributions { get; set; }
 		public static ConcurrentBag<User> Users { get; set; }
 
 		public static void Seed()
@@ -31,7 +31,7 @@ namespace CrowdInvestCore.Repositories
 
 			Users = new ConcurrentBag<User>(faker.Generate(30));
 		}
-		
+
 		private static void SeedFunds()
 		{
 			Randomizer.Seed = new Random(8525);
@@ -56,13 +56,13 @@ namespace CrowdInvestCore.Repositories
 				.RuleFor(b => b.Value, f => f.Random.Number(10, 50));
 
 			InvestmentFundContributions = new ConcurrentBag<InvestmentFundContribution>();
-			
-			foreach(var user in Users)
+
+			foreach (var user in Users)
 			{
 				var contribution = faker.Generate(1).First();
 				contribution.InvestorId = user.UserId;
 				contribution.InvestmentFundId = fund.InvestmentFundId;
-				contribution.Value = (int)fund.MaximumValue * (contribution.Value / 1000);
+				contribution.Value = (int) fund.MaximumValue * (contribution.Value / 1000);
 				InvestmentFundContributions.Add(contribution);
 			}
 		}

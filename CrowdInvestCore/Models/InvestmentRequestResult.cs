@@ -7,6 +7,6 @@ namespace CrowdInvestCore.Models
 	{
 		public Guid RequestId { get; set; }
 		public ResultType Result { get; set; }
-		public InvestmentFundContribution Contribution {get; set; }
+		public InvestmentFundContribution Contribution { get; set; }
 	}
 }

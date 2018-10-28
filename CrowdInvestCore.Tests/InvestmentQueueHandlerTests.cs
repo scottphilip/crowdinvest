@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using CrowdInvestCore.Hubs;
 using CrowdInvestCore.Models;
 using CrowdInvestCore.Models.Enums;
 using CrowdInvestCore.Queues;
 using CrowdInvestCore.Repositories;
-using Microsoft.AspNetCore.SignalR;
 using Moq;
 using Xunit;
 
@@ -22,7 +17,6 @@ namespace CrowdInvestCore.Tests
 			FakeDatabase.Seed();
 		}
 
-		
 
 		[Fact]
 		public void AddRequest_SingleSuccessfulAdd_Success()
@@ -30,7 +24,7 @@ namespace CrowdInvestCore.Tests
 			var user = new UserRepository().All.Skip(1).First();
 			var fund = new InvestmentFundRepository().All.Skip(3).First();
 
-			var request = new InvestmentRequest()
+			var request = new InvestmentRequest
 			{
 				InvestmentFundId = fund.InvestmentFundId,
 				Value = 100,
@@ -39,11 +33,11 @@ namespace CrowdInvestCore.Tests
 				RequestedByConnectionId = Guid.NewGuid().ToString()
 			};
 
-			var result = new InvestmentRequestResult()
+			var result = new InvestmentRequestResult
 			{
 				Result = ResultType.Pass,
 				RequestId = request.RequestId,
-				Contribution = new InvestmentFundContribution()
+				Contribution = new InvestmentFundContribution
 				{
 					InvestorId = user.UserId,
 					Value = request.Value,
@@ -57,22 +51,23 @@ namespace CrowdInvestCore.Tests
 			var mockHandler = MockHelper.GetMockInvestmentHandler(result);
 
 			var queue = new InvestmentRequestQueue(
-				mockHandler.Object, 
-				new InvestmentFundRepository(), 
+				mockHandler.Object,
+				new InvestmentFundRepository(),
 				mockHub.Object);
 
 			queue.Add(request);
 
 			waitHubCall.WaitOne(10000);
 
-			mockHub.Verify(context => 
-				context
-					.Clients
-					.Client(It.Is<string>(s => s.Equals(request.RequestedByConnectionId)))
-					.OnRequestComplete(It.Is<InvestmentRequestResult>(r => 
-						r.RequestId == result.RequestId
-						&& r.Result == result.Result
-						&& r.Contribution.InvestmentFundId == result.Contribution.InvestmentFundId)), Times.AtLeastOnce);
+			mockHub.Verify(context =>
+					context
+						.Clients
+						.Client(It.Is<string>(s => s.Equals(request.RequestedByConnectionId)))
+						.OnRequestComplete(It.Is<InvestmentRequestResult>(r =>
+							r.RequestId == result.RequestId
+							&& r.Result == result.Result
+							&& r.Contribution.InvestmentFundId == result.Contribution.InvestmentFundId)),
+				Times.AtLeastOnce);
 		}
 	}
 }

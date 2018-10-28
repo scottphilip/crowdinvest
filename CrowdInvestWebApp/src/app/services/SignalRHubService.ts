@@ -35,12 +35,9 @@ export class SignalRHubService {
         this.registerOnServerEvents();
 
         try {
-
             await this.hubConnection.start();
             this.isHubConnected = true;
-
         } catch (e) {
-
             this.isHubConnected = false;
             console.warn("SignalRError", e);
             throw "Connection Error";

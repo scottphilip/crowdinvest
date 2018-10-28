@@ -13,7 +13,7 @@ namespace CrowdInvestCore.Models
 
 		public string FundTitle { get; set; }
 
-		public string FundDescription {get; set; }
+		public string FundDescription { get; set; }
 
 		public decimal MaximumValue { get; set; }
 	}

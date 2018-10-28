@@ -1,6 +1,4 @@
 ﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Text;
 using CrowdInvestCore.Models;
 
 namespace CrowdInvestCore.Repositories

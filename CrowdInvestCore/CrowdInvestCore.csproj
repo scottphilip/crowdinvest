@@ -10,10 +10,4 @@
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Microsoft.AspNet.SignalR.Core">
-      <HintPath>..\..\..\..\Users\scott.philip\.nuget\packages\microsoft.aspnet.signalr.core\2.2.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

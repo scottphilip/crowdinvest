@@ -1,0 +1,58 @@
+<h1 mat-dialog-title>{{fund.fundTitle}}</h1>
+
+<div class="mat-typography">
+
+    <mat-dialog-content>
+
+        <h4 class="mat-h4">How much you would like to add to the fund?</h4>
+
+        <div class="form-items">
+
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <mat-form-field>
+                    <input matInput
+                           formControlName="value"
+                           placeholder="Amount"
+                           type="number"
+                           required>
+                    <span matPrefix>€&nbsp;</span>
+                    <span matSuffix>.00</span>
+                </mat-form-field>
+                <div *ngIf="isSubmitted && f.value.errors">
+                    <mat-error *ngIf="f.value.errors.required">Value is required</mat-error>
+                    <mat-error *ngIf="f.value.errors.min || f.value.errors.max">
+                        Value must be between €100 and €10,000
+                    </mat-error>
+                </div>
+
+            </form>
+        </div>
+        
+    </mat-dialog-content>
+
+    <mat-progress-bar mode="indeterminate" *ngIf="isWorking" color="accent"></mat-progress-bar>
+
+    <mat-dialog-actions>
+
+        <span *ngIf="errorMessage.length > 0" class="error mat-body-2">
+            {{errorMessage}}
+        </span>
+
+        <span class="spacer"></span>
+
+        <span *ngIf="!isWorking">
+            <button mat-flat-button mat-dialog-close>Cancel</button>
+        </span>
+
+        <span *ngIf="!form.disabled" >
+            <button mat-flat-button color="accent"(click)="onSubmit()">Confirm</button>
+        </span>
+
+        <span *ngIf="form.disabled && isWorking">
+            <button mat-flat-button mat-dialog-close disabled="true">Working...</button>
+        </span>
+
+    </mat-dialog-actions>
+
+</div>
+

@@ -1,0 +1,22 @@
+.spacer {
+    flex: 1 1 auto;
+}
+
+.name {
+    padding: 20px 20px 20px 0;
+}
+
+.balance {
+    font-size: 10px;
+    text-align: right;
+    display: inline-block;
+}
+
+.container {
+    margin: 0 auto;
+    width: 800px;
+}
+
+app-fundlist {
+    width: 100%;
+}

@@ -1,0 +1,32 @@
+mat-dialog-content {
+    margin: 0;
+    height: 150px;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+mat-dialog-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.form-items {
+    padding: 0 50px;
+}
+h4 {
+    padding: 0;
+}
+button {
+    margin: 0 0 0 20px;
+    float: right;
+}
+.spacer {
+    flex: 1 1 auto;
+}
+
+.error {
+    color: red;
+    max-width: 300px;
+}

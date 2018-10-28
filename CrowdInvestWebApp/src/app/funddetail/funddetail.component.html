@@ -1,0 +1,53 @@
+<div
+    class="detail-container mat-typography mat-elevation-z2">
+
+    <div class="title">
+
+        <span class="title-text mat-h2">
+            {{fund.fundTitle}}
+        </span>
+
+        <span class="spacer"></span>
+
+        <div class="title-item title-box" *ngIf="fund.contribution !== undefined">
+            <div class="mat-small">YOUR CONTRIBUTION</div>
+            <div>{{fund.contribution.value | currency:'EUR' }}</div>
+        </div>
+
+        <div class="title-item title-box">
+            <div class="mat-small">FUND BALANCE</div>
+            <div>{{fund.currentTotal | currency:'EUR' }}</div>
+        </div>
+
+        <span class="title-item" *ngIf="fund.contribution === undefined">
+            <button mat-flat-button
+                    color="accent"
+                    (click)="showFundRequestDialog();">
+                Apply
+            </button>
+        </span>
+
+        <span class="title-item" *ngIf="fund.contribution !== undefined">
+            <button mat-flat-button
+                    color="primary">
+                <mat-icon matListIcon>check_circle_outline</mat-icon>
+                Member
+            </button>
+        </span>
+
+    </div>
+    
+    <mat-progress-bar class="percentage-bar"
+                      color="primary"
+                      mode="determinate"
+                      [value]="(fund.currentTotal / fund.maximumValue) * 100"></mat-progress-bar>
+
+    <div class="content">
+        <p>{{fund.fundDescription}}</p>
+        <div>
+            <div class="mat-small">MAX BALANCE</div>
+            <div class="mat-body-strong">{{fund.maximumValue | currency:'EUR' }}</div>
+        </div>
+    </div>
+
+</div>

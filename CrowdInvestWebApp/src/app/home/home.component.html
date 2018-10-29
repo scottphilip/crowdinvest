@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+    <h1>CrowdInvest</h1>
+    <span class="spacer"></span>
+    <span *ngIf="user != null" class="name mat-body">
+        You are logged in as {{user.firstName}} {{user.lastName}}
+    </span>
+</mat-toolbar>
+
+
+<div class="container">
+
+    <app-fundlist></app-fundlist>
+    
+</div>

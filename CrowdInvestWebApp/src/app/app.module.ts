@@ -1,9 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 
 //TODO: Remove unused references
 import {
@@ -15,13 +13,15 @@ import {
     MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule,
     MatStepperModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatTreeModule
 } from '@angular/material';
+import { HttpModule } from '@angular/http';
 
-import { InvestmentFundService, SignalRHubService, UserService } from "./services";
-
-
+import { InvestmentFundService, SignalRHubService, UserService, ConnectionResolver } from "./services";
+import { AppComponent } from './app.component';
+import { routing } from './app.routing';
 import { RequestformComponent } from './requestform/requestform.component';
 import { FundDetailComponent } from './funddetail/funddetail.component';
 import { FundlistComponent } from './fundlist/fundlist.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -29,9 +29,12 @@ import { FundlistComponent } from './fundlist/fundlist.component';
       AppComponent,
       RequestformComponent,
       FundDetailComponent,
-      FundlistComponent
+      FundlistComponent,
+      HomeComponent
   ],
   imports: [
+      HttpModule,
+      routing,
       BrowserModule,
       FormsModule,
       ReactiveFormsModule,
@@ -47,7 +50,7 @@ import { FundlistComponent } from './fundlist/fundlist.component';
       MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule,
       MatStepperModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatTreeModule
   ],
-  providers: [InvestmentFundService, SignalRHubService, UserService],
+  providers: [InvestmentFundService, SignalRHubService, UserService, ConnectionResolver],
   bootstrap: [AppComponent],
   entryComponents: [RequestformComponent]
 })

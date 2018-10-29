@@ -27,11 +27,21 @@
             </button>
         </span>
 
-        <span class="title-item" *ngIf="fund.contribution !== undefined">
+        <span class="title-item"
+              *ngIf="fund.contribution !== undefined && fund.currentTotal < (fund.maximumValue - 100)">
             <button mat-flat-button
                     color="primary">
                 <mat-icon matListIcon>check_circle_outline</mat-icon>
                 Member
+            </button>
+        </span>
+
+        <span class="title-item"
+              *ngIf="fund.contribution === undefined && fund.currentTotal >= (fund.maximumValue - 100)">
+            <button mat-flat-button disabled
+                    color="primary">
+                <mat-icon matListIcon>poll</mat-icon>
+                Full
             </button>
         </span>
 

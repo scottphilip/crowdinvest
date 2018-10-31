@@ -12,6 +12,13 @@ namespace CrowdInvestCore.Hubs
 	{
 		public static IHubContext<InvestorHub, IInvestorHubClient> Instance { get; set; }
 
+		/// <summary>
+		/// Add to queue
+		/// </summary>
+		/// <param name="userId"></param>
+		/// <param name="investmentFundId"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
 		public InvestmentRequest CreateContributionRequest(
 			Guid userId,
 			Guid investmentFundId,

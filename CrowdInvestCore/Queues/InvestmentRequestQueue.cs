@@ -15,6 +15,7 @@ namespace CrowdInvestCore.Queues
 
 		protected IInvestmentHandler InvestmentHandler;
 		protected Thread ProcessThread;
+		//TODO: ServiceBus for horizontal scaling [KISS!]
 		protected ConcurrentQueue<InvestmentRequest> RequestQueue;
 
 		//TODO: Should be interfaces for dependency injection ...
@@ -29,6 +30,11 @@ namespace CrowdInvestCore.Queues
 			RequestQueue = new ConcurrentQueue<InvestmentRequest>();
 		}
 
+		/// <summary>
+		/// Nasty singleton ... This "queue" should be running in a separate process.  Ideally
+		/// something like ServiceBus [KISS!]
+		/// </summary>
+		/// <returns></returns>
 		public static InvestmentRequestQueue Instance()
 		{
 			return _instance ?? (_instance =
@@ -38,11 +44,16 @@ namespace CrowdInvestCore.Queues
 					       InvestorHub.Instance));
 		}
 
+		/// <summary>
+		/// Add to the "queue" .... again this should be sending to a ServiceBus [KISS!]
+		/// </summary>
+		/// <param name="request"></param>
+		/// <returns></returns>
 		public InvestmentRequest Add(InvestmentRequest request)
 		{
 			RequestQueue.Enqueue(request);
 
-			//TODO: Should use a pool for scalability but for a PoC ... bleugh
+			// Make sure the worker is running 
 			ProcessItems();
 
 			return request;
@@ -56,18 +67,21 @@ namespace CrowdInvestCore.Queues
 			// Check if process thread already created
 			if (ProcessThread?.IsAlive ?? false) return;
 
+			// Should be a pool so concurrent processing can happen [KISS!]
 			ProcessThread = new Thread(() =>
 			{
 				while (!RequestQueue.IsEmpty)
 				{
-					// Simulate the queue being busy
+					// Simulate the queue being busy 
 					Thread.Sleep(3000);
 
 					// Pop item from the queue
 					if (!RequestQueue.TryDequeue(out var request)) continue;
 
+					// Pass over to the logic engine which can do the business logic on the request
 					var result = InvestmentHandler.AddContribution(request);
 
+					// Send event to the waiting client containing the result
 					HubContext?.Clients
 						.Client(request.RequestedByConnectionId)
 						.OnRequestComplete(result);

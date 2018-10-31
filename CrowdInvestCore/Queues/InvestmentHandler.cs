@@ -42,6 +42,8 @@ namespace CrowdInvestCore.Queues
 
 		public InvestmentRequestResult AddContribution(InvestmentRequest request)
 		{
+			//TODO: Validate request
+
 			var investor = UserRepository.All.FirstOrDefault(i => i.UserId == request.UserId);
 			if (investor == null)
 				return new InvestmentRequestResult
@@ -68,7 +70,7 @@ namespace CrowdInvestCore.Queues
 					Result = ResultType.FailDuplicate
 				};
 
-			//TODO: Lock should be per fund not global
+			//TODO: Lock should be per fund not global so concurrent locking accross different funds can happen
 			lock (ConfirmationLock)
 			{
 				if (fund.GetSummary().CurrentTotal + request.Value > fund.MaximumValue)

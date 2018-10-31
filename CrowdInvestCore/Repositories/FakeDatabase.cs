@@ -6,6 +6,9 @@ using CrowdInvestCore.Models;
 
 namespace CrowdInvestCore.Repositories
 {
+	/// <summary>
+	/// Fake data store filled with nonsense
+	/// </summary>
 	public static class FakeDatabase
 	{
 		public static ConcurrentBag<InvestmentFund> InvestmentFunds { get; set; }
